@@ -147,6 +147,43 @@ namespace CorrectResume.ViewModels
             }
         }
 
+        public ICommand SaveAllResume { get; set; }
+
+        private bool CanSaveAllResume(object p) => true;
+        private async void OnSaveAllResume(object p)
+        {
+            var resume = new SaveFileDialog();
+            resume.ShowDialog();
+            if (resume.FileName != "")
+            {
+                using (var stream = resume.OpenFile())
+                {
+                    for (int i = 0; i < _Texts.Count; i++)
+                    {
+                        ConvertResume.Execute(null);
+
+                        string responsibilities = "";
+                        foreach (var item in _Responsibilities)
+                            responsibilities = responsibilities + "\n" + item;
+
+                        string conditions = "";
+                        foreach (var item in _Conditions)
+                            conditions = conditions + "\n" + item;
+
+                        string requirement = "";
+                        foreach (var item in _Requirement)
+                            requirement = requirement + "\n" + item;
+
+                        var saveDate = $"\n Должностные обязанности:\n\n{responsibilities}\n\n Условия:{conditions} \n\n Требование к соискателю:{requirement}\n";
+
+                        var writer = new StreamWriter(stream);
+                        await writer.WriteAsync(saveDate);
+                        writer.Flush();
+                    }
+                };
+            }
+        }
+
         public ICommand ConvertResume { get; set; }
 
         private bool CanConvertResume(object p) => true;
@@ -195,12 +232,12 @@ namespace CorrectResume.ViewModels
             _Model = new TextModel();
             _Transformer = _Model.LoadModel("NeuroLibModel2.zip");
 
-
            OpenResume = new CommandIniter(OnOpenResume, CanOpenResume);
            SaveResume = new CommandIniter(OnSaveResume, CanSaveResume);
            ConvertResume = new CommandIniter(OnConvertResume, CanConvertResume);
            SwipeLeft = new CommandIniter(OnSwipeLeft, CanSwipeLeft);
            SwipeRight = new CommandIniter(OnSwipeRight, CanSwipeRight);
+           SaveAllResume = new CommandIniter(OnSaveAllResume, CanSaveAllResume);
         }
         #endregion
     }

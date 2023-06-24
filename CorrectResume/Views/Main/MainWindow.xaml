@@ -81,9 +81,12 @@
             <Button Command="{Binding SwipeLeft}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Width="100" Height="50">
                 <Image Source="D:\Програмирование\Visual Studio\CorrectResume\CorrectResume\Infrastructure\Resources\icons8-назад-100.png"/>
             </Button>
-            
-            <Button Command="{Binding ConvertResume}" Grid.ColumnSpan="3" Grid.Row="3" Width="150" Height="45" BorderThickness="0" Content="Преобразовать"/>
-            
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                 <Button Margin="5" Command="{Binding ConvertResume}" Grid.ColumnSpan="3" Grid.Row="3" Width="300" Height="45" BorderThickness="0" Content="Преобразовать только эту вакансию"/>
+                 <Button Margin="5" Command="{Binding SaveAllResume}" Grid.ColumnSpan="3" Grid.Row="3" Width="300" Height="45" BorderThickness="0" Content="Преобразовать и сохранить всё"/>
+            </StackPanel>
+
             <Button Command="{Binding SwipeRight}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Width="100" Height="50">
                 <Image Source="D:\Програмирование\Visual Studio\CorrectResume\CorrectResume\Infrastructure\Resources\icons8-вперед-100.png"/>
             </Button>
