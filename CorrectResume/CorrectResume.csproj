@@ -8,10 +8,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Commands\Base\" />
+    <None Remove="Infrastructure\Resources\icons8-вперед-100.png" />
+    <None Remove="Infrastructure\Resources\icons8-назад-100.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Infrastructure\Controls\" />
     <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="23.6.0" />
+    <PackageReference Include="EPPlus" Version="6.2.6" />
+    <PackageReference Include="Extension.OfficeOpenXml" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NeuroLib\NeuroLib\NeuroLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Infrastructure\Resources\icons8-вперед-100.png" />
+    <Resource Include="Infrastructure\Resources\icons8-назад-100.png" />
   </ItemGroup>
 
 </Project>

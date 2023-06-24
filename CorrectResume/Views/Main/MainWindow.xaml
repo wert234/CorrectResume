@@ -4,9 +4,89 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CorrectResume"
+        xmlns:vm="clr-namespace:CorrectResume.ViewModels"
         mc:Ignorable="d"
-        Title="CorrectResume" Height="450" Width="800">
+        Title="CorrectResume" MinHeight="550" MinWidth="1000" Height="550" Width="1000">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary Source="/Infrastructure/Resources/DefaultStyles.xaml"/>
+    </Window.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
+        <Grid Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="43"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding Resume}"/>
+                </ScrollViewer>
+            <Button Grid.Row="1" Padding="10" Command="{Binding OpenResume}" BorderThickness="0" VerticalAlignment="Bottom">Открыть резюме</Button>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="Black" Opacity="0.5"/>
+
+        <Grid Margin="3" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="43"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <ScrollViewer Grid.Row="0">
+                <StackPanel CanVerticallyScroll="True">
+                    <TextBlock FontSize="16" FontWeight="Bold">Должностные обязанности:</TextBlock>
+                    <ItemsControl ItemsSource="{Binding Responsibilities}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Margin="25 5 0 5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <TextBlock FontSize="16" FontWeight="Bold">Условия:</TextBlock>
+                    <ItemsControl ItemsSource="{Binding Conditions}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Margin="25 5 0 5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    
+                    <TextBlock FontSize="16" FontWeight="Bold">Требование к соискателю:</TextBlock>
+                    <ItemsControl ItemsSource="{Binding Requirement}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Margin="25 5 0 5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Button Grid.Row="1" Padding="10" Command="{Binding SaveResume}" BorderThickness="0" VerticalAlignment="Bottom">Сохранить резюме</Button>
+        </Grid>
+
+        <Grid Grid.ColumnSpan="3" Grid.Row="3">
+            <Button Command="{Binding SwipeLeft}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Left" Width="100" Height="50">
+                <Image Source="D:\Програмирование\Visual Studio\CorrectResume\CorrectResume\Infrastructure\Resources\icons8-назад-100.png"/>
+            </Button>
+            
+            <Button Command="{Binding ConvertResume}" Grid.ColumnSpan="3" Grid.Row="3" Width="150" Height="45" BorderThickness="0" Content="Преобразовать"/>
+            
+            <Button Command="{Binding SwipeRight}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" Width="100" Height="50">
+                <Image Source="D:\Програмирование\Visual Studio\CorrectResume\CorrectResume\Infrastructure\Resources\icons8-вперед-100.png"/>
+            </Button>
+        </Grid>
     </Grid>
 </Window>
