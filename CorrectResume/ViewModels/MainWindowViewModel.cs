@@ -38,8 +38,8 @@ namespace CorrectResume.ViewModels
             }
         }
 
-        private ObservableCollection<TextBlock> _Responsibilities = new ObservableCollection<TextBlock>();
-		public ObservableCollection<TextBlock> Responsibilities
+        private ObservableCollection<string> _Responsibilities = new ObservableCollection<string>();
+		public ObservableCollection<string> Responsibilities
         {
 			get => _Responsibilities;
 			set
@@ -50,8 +50,8 @@ namespace CorrectResume.ViewModels
             }
 		}
 
-        private ObservableCollection<TextBlock> _Conditions = new ObservableCollection<TextBlock>();
-        public ObservableCollection<TextBlock> Conditions
+        private ObservableCollection<string> _Conditions = new ObservableCollection<string>();
+        public ObservableCollection<string> Conditions
         {
             get => _Conditions;
             set
@@ -62,8 +62,8 @@ namespace CorrectResume.ViewModels
             }
         }
 
-        private ObservableCollection<TextBlock> _Requirement = new ObservableCollection<TextBlock>();
-        public ObservableCollection<TextBlock> Requirement
+        private ObservableCollection<string> _Requirement = new ObservableCollection<string>();
+        public ObservableCollection<string> Requirement
         {
             get => _Requirement;
             set
@@ -117,17 +117,32 @@ namespace CorrectResume.ViewModels
         public ICommand SaveResume { get; set; }
 
         private bool CanSaveResume(object p) => true;
-        private void OnSaveResume(object p)
+        private async void OnSaveResume(object p)
         {
-         //   _Model.CreatModel(@"C:\Users\Vladlen\Desktop\Data.txt", "NeuroLibModel2.zip");
-
             var resume = new SaveFileDialog();
             resume.ShowDialog();
             if (resume.FileName != "")
             {
                 using (var stream = resume.OpenFile())
                 {
-                    //Обработка данных
+                    string responsibilities = "";
+                    foreach (var item in _Responsibilities)
+                        responsibilities = responsibilities + "\n" + item;
+
+                    string conditions = "";
+                    foreach (var item in _Conditions)
+                        conditions = conditions + "\n" + item;
+
+                    string requirement = "";
+                    foreach (var item in _Requirement)
+                        requirement = requirement + "\n" + item;
+
+                    var saveDate = $"Должностные обязанности:\n{responsibilities}\n Условия:{conditions} \n Требование к соискателю:{requirement}";
+
+                    var writer = new StreamWriter(stream);
+                   await writer.WriteAsync(saveDate);
+                    writer.Flush();
+
                 };
             }
         }
@@ -159,11 +174,11 @@ namespace CorrectResume.ViewModels
                 var predict = _Model.Predict(_Transformer, new ModelInput() { Sentence = line });
 
                 if (predict == 0)
-                     Responsibilities.Add(new TextBlock(new Run(line)));
+                     Responsibilities.Add(line);
                 else if(predict == 1)
-                    Conditions.Add(new TextBlock(new Run(line)));
+                    Conditions.Add(line);
                 else if (predict == 2)
-                    Requirement.Add(new TextBlock(new Run(line)));
+                    Requirement.Add(line);
             }
         }
         #endregion
