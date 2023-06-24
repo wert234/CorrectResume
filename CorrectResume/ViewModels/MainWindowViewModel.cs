@@ -21,7 +21,7 @@ using System.IO;
 
 namespace CorrectResume.ViewModels
 {
-    internal class MainWindowViewModel : ViewModels.Base.ViewModel
+    public class MainWindowViewModel : ViewModels.Base.ViewModel
     {
         #region Property
 
@@ -137,7 +137,7 @@ namespace CorrectResume.ViewModels
                     foreach (var item in _Requirement)
                         requirement = requirement + "\n" + item;
 
-                    var saveDate = $"Должностные обязанности:\n{responsibilities}\n Условия:{conditions} \n Требование к соискателю:{requirement}";
+                    var saveDate = $"\n Должностные обязанности:\n\n{responsibilities}\n\n Условия:{conditions} \n\n Требование к соискателю:{requirement}\n";
 
                     var writer = new StreamWriter(stream);
                    await writer.WriteAsync(saveDate);
@@ -190,7 +190,7 @@ namespace CorrectResume.ViewModels
         private List<string> _Texts = new List<string>();
         private int _TextIndex = 0;
 
-        internal MainWindowViewModel()
+        public MainWindowViewModel()
         {
             _Model = new TextModel();
             _Transformer = _Model.LoadModel("NeuroLibModel2.zip");

@@ -19,6 +19,10 @@
 
   <ItemGroup>
     <PackageReference Include="Aspose.Cells" Version="23.6.0" />
+    <PackageReference Include="Costura.Fody" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="EPPlus" Version="6.2.6" />
     <PackageReference Include="Extension.OfficeOpenXml" Version="1.1.0" />
   </ItemGroup>
